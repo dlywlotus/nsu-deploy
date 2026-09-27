@@ -5,10 +5,10 @@ services:
       - "80:80"
 
   frontend:
-    image: nsu-frontend:latest
+    image: dlywlotus/nsu-frontend:latest
 
   backend:
-    image: nsu-backend:latest
+    image: dlywlotus/nsu-backend:latest
     env_file:
       - ./.env
 
