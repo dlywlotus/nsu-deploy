@@ -1,0 +1,39 @@
+services:
+  nginx:
+    build: ./
+    ports:
+      - "80:80"
+
+  frontend:
+    image: nsu-frontend:latest
+
+  backend:
+    image: nsu-backend:latest
+    env_file:
+      - ./.env
+
+  postgres:
+    image: postgres:17
+    environment:
+      - POSTGRES_DB=nsu
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_USER=postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  rust-fs:
+    image: rustfs/rustfs:latest
+    environment:
+      - RUSTFS_ACCESS_KEY=admin
+      - RUSTFS_SECRET_KEY=123
+      - RUSTFS_SERVER_DOMAINS=localhost
+      - RUSTFS_CONSOLE_ENABLE=true
+
+    ports:
+      - "9001:9001"
+    volumes:
+      - rust-fs-data:/data
+
+volumes:
+  db-data:
+  rust-fs-data:
